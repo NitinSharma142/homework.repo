@@ -1,8 +1,11 @@
 from flask import Flask, render_template, redirect, url_for, request, session
 
+from datetime import timedelta
+
+
 app = Flask(__name__)
 app.secret_key = "ztr"
-
+app.permanent_session_lifetime = timedelta(days=1)
 
 @app.route("/")
 def home():
@@ -27,6 +30,11 @@ def user():
     else:
         return redirect(url_for("login"))
 
+
+@app.route("/logout")
+def logout():
+    session.pop("user",None)
+    return redirect(url_for("login"))
 
 if __name__ == "__main__":
     app.run()
