@@ -2,7 +2,6 @@ from flask import Flask, render_template, redirect, url_for, request, session
 
 from datetime import timedelta
 
-
 app = Flask(__name__)
 app.secret_key = "ztr"
 app.permanent_session_lifetime = timedelta(days=1)
@@ -14,6 +13,7 @@ def home():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
+        session.permanent=True
         user = request.form["nm"]
         session["user"] = user
         return redirect(url_for("user"))
